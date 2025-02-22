@@ -1,13 +1,12 @@
-// Copyright 2023 Binepad (@binpad)
-// SPDX-License-Identifier: GPL-2.0-or-later
-
-// Copyright 2023 Binepad (@binpad)
-// SPDX-License-Identifier: GPL-2.0-or-later
+// This is the keymap for a Binepad BNK9
+// It showcases how to activate the led/RGB matrix for a single button to indicate
+// which layer is active
 
 #include QMK_KEYBOARD_H
 
-int led_min = 1;
-int led_max = 9;
+// the board has 9 leds, starting from position 0
+int led_min = 0;
+int led_max = 8;
 
 enum custom_keycodes {
     MACRO0 = SAFE_RANGE,
@@ -16,9 +15,7 @@ enum custom_keycodes {
     MACRO3,
     MACRO4,
     MACRO5,
-    MACRO6,
-    TOZERO,
-    TOONE
+    MACRO6
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -53,31 +50,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LCTL(SS_LGUI(SS_LALT(SS_LSFT("q")))));
             }
             break;
-        case TOZERO:
-            if (record->event.pressed) {
-             layer_move(0);
-
-                // Set the first LED to blue
-            rgb_matrix_set_color(0, 0, 0, 255); 
-            rgb_matrix_set_color(1, 0, 0, 0); 
-            }
-            break;
-        case TOONE:
-            if (record->event.pressed) {
-             layer_move(1);
-
-                // Set the first LED to blue
-            rgb_matrix_set_color(1, 0, 0, 255); 
-            rgb_matrix_set_color(0, 0, 0, 0); 
-            }
-            break;
     }
     return true;
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_MUTE,
+        KC_MUTE, // activated when pressing the wheel
         KC_F12,    KC_F13,    KC_F16,
         KC_F17,    MACRO4,    KC_F19,
         MACRO6,    RM_TOGG,    TO(1)
@@ -106,7 +85,7 @@ led_config_t g_led_config = { {
 } };
 
 #if defined(ENCODER_MAP_ENABLE)
-
+// rotation of the wheel in the different layers
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [1] = { ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP) }
@@ -115,25 +94,24 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 #endif
 
 void keyboard_post_init_user(void) {
+    // we enable the rgb matrix
     rgb_matrix_enable_noeeprom();
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     switch(get_highest_layer(layer_state|default_layer_state)) {
         case 1:
+            // somehow, I need to turn them off here as they do not work in keyboard_post_init_user
             for (uint8_t i = led_min; i < led_max; i++) {
                 rgb_matrix_set_color(i, 0, 0, 0);
             }
             rgb_matrix_set_color(1, RGB_BLUE);
-            rgb_matrix_set_color(0, 0, 0, 0);
-
             break;
         case 0:
             for (uint8_t i = led_min; i < led_max; i++) {
                 rgb_matrix_set_color(i, 0, 0, 0);
             }
             rgb_matrix_set_color(0, RGB_BLUE);
-            rgb_matrix_set_color(1, 0, 0, 0);
             break;
         default:
             break;
