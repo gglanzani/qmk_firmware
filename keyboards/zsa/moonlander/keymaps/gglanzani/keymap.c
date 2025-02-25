@@ -16,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           TT(1),                                          TT(2),          KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,       
     KC_DELETE,      KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_TAB,                                         KC_ENTER,       KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_EQUAL,       
     KC_BSPC,        KC_A,           KC_S,           KC_D,           KC_F,           KC_G,           KC_ESCAPE,                                                                      KC_HYPR,        KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_QUOTE,       
-    KC_LEFT_SHIFT,  KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RIGHT_SHIFT, 
+    KC_LEFT_SHIFT,  KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_MINUS, 
     MO(1),          CW_TOGG,        KC_LEFT,        KC_RIGHT,       SC_LCPO,   KC_LEFT_CTRL,                                                                                                   KC_RIGHT_CTRL,  SC_RCPC,  KC_UP,          KC_DOWN,        KC_LBRC,        KC_RBRC,        
     KC_BSPC,        SC_LAPO,    SC_LSPO,                  SC_RSPC, SC_RAPC,    KC_SPACE
   ),
