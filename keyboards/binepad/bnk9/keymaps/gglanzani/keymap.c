@@ -9,45 +9,15 @@ int led_min = 0;
 int led_max = 8;
 
 enum custom_keycodes {
-    MACRO0 = SAFE_RANGE,
-    MACRO1,
-    MACRO2,
-    MACRO3,
-    MACRO4,
-    MACRO5,
+    MACRO4 = SAFE_RANGE,
     MACRO6
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MACRO0:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("["));
-            }
-            break;
-        case MACRO1:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("]"));
-            }
-            break;
-        case MACRO2:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("{"));
-            }
-            break;
-        case MACRO3:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("}"));
-            }
-            break;
-        case MACRO4:
+       case MACRO4:
             if (record->event.pressed) {
                 SEND_STRING(SS_LGUI(SS_LSFT("m")));
-            }
-            break;
-        case MACRO6:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(SS_LGUI(SS_LALT(SS_LSFT("q")))));
             }
             break;
     }
@@ -58,14 +28,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         KC_MUTE, // activated when pressing the wheel
         KC_F12,    KC_F13,    KC_F16,
-        KC_F17,    MACRO4,    KC_F19,
-        MACRO6,    RM_TOGG,    TO(1)
+        KC_F17,    LGUI(LSFT(KC_M)),    KC_F19,
+        HYPR(KC_Q),    RM_TOGG,    TO(1)
     ),
     [1] = LAYOUT(
         RM_TOGG,
-        MACRO0,  MACRO1,  RM_SPDU,
-        MACRO2,  MACRO3,  RM_SPDD,
-        RM_PREV,  RM_NEXT,  TO(0)
+        LGUI(KC_LBRC),  LGUI(KC_RBRC),  KC_PGUP,
+        LGUI(LSFT(KC_LBRC)), LGUI(LSFT(KC_RBRC)),  KC_PGDN,
+        LALT(KC_LEFT),  LALT(KC_RIGHT),  TO(0)
     )
 };
 
