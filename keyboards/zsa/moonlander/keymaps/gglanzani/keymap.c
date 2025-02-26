@@ -25,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, RGB_MODE_FORWARD,RGB_VAD,        RGB_VAI,        TOGGLE_LAYER_COLOR,KC_PIPE,        KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_UP,          KC_LCBR,        KC_RCBR,        KC_LBRC,        KC_RBRC,        KC_F12,         
     KC_TRANSPARENT, RGB_TOG,        RGB_SLD,        RGB_HUD,        RGB_HUI,        KC_GRAVE,       KC_TRANSPARENT,                                                                 KC_TRANSPARENT, KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_KP_PLUS,     KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_PERC,        KC_CIRC,        KC_LBRC,        KC_RBRC,        KC_TILD,                                        KC_AMPR,        KC_1,           KC_LABK,        KC_RABK,        KC_BSLS,        KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_COMMA,       HSV_0_245_245,  HSV_74_255_206, HSV_152_255_255,KC_LEFT_CTRL,                                                                                                   KC_RIGHT_CTRL,  KC_TRANSPARENT, KC_DOT,         KC_0,           KC_EQUAL,       KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_COMMA,       HSV_0_245_245,  HSV_74_255_206, HSV_152_255_255,KC_LEFT_CTRL,                                                                                                   KC_RIGHT_CTRL,  A(KC_LEFT), A(KC_RIGHT),         KC_0,           KC_EQUAL,       KC_TRANSPARENT, 
     KC_BSPC,        KC_LEFT_GUI,    KC_LEFT_SHIFT,                  KC_RIGHT_SHIFT, KC_LEFT_ALT,    KC_SPACE
   ),
   [2] = LAYOUT_moonlander(
