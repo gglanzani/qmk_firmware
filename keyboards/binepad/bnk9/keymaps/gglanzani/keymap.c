@@ -7,6 +7,25 @@
 // the board has 9 leds, starting from position 0
 int led_min = 0;
 int led_max = 8;
+int on_air = 0;
+
+void toggle_on_air(void) {
+    if (on_air == 0) {
+        rgb_matrix_set_color(4, RGB_RED);
+        on_air = 1;
+    }
+    if (on_air == 1) {
+        rgb_matrix_set_color(4, 0, 0, 0);
+        on_air = 0;
+    }
+}
+
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM combo_boot[] = {KC_F12, KC_F13, KC_F16, COMBO_END};
+combo_t key_combos[] = {
+   COMBO(combo_boot, QK_BOOT),
+};
+#endif
 
 enum custom_keycodes {
     MACRO4 = SAFE_RANGE,
@@ -18,6 +37,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
        case MACRO4:
             if (record->event.pressed) {
                 SEND_STRING(SS_LGUI(SS_LSFT("m")));
+                toggle_on_air();
             }
             break;
     }
@@ -26,15 +46,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_MUTE, // activated when pressing the wheel
-        KC_F12,    KC_F13,    KC_F16,
-        KC_F17,    LGUI(LSFT(KC_M)),    KC_F19,
+        MACRO4, // activated when pressing the wheel
+        LCTL(LALT(LGUI(KC_3))),    LALT(LGUI(KC_UP)),    LCTL(LALT(LGUI(KC_4))),
+        LALT(LGUI(KC_LEFT)),    MACRO4,    LALT(LGUI(KC_RIGHT)),
         HYPR(KC_Q),    RM_TOGG,    TO(1)
     ),
     [1] = LAYOUT(
-        RM_TOGG,
-        LGUI(KC_LBRC),  LGUI(KC_RBRC),  KC_PGUP,
-        LGUI(LSFT(KC_LBRC)), LGUI(LSFT(KC_RBRC)),  KC_PGDN,
+        MACRO4,
+        LGUI(KC_LBRC),  LGUI(KC_RBRC),  LGUI(KC_C),
+        LGUI(LSFT(KC_LBRC)), LGUI(LSFT(KC_RBRC)),  LGUI(KC_V),
         LALT(KC_LEFT),  LALT(KC_RIGHT),  TO(0)
     )
 };
@@ -66,6 +86,8 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 void keyboard_post_init_user(void) {
     // we enable the rgb matrix
     rgb_matrix_enable_noeeprom();
+    SEND_STRING(SS_LGUI(SS_LCTL(SS_LSFT("m"))));  // When using on_air, this will mute at the beginning. Software config on Mac software MicDrop
+
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
