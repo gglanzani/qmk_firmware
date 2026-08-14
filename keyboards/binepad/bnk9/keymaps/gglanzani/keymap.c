@@ -10,14 +10,7 @@ int led_max = 8;
 int on_air = 0;
 
 void toggle_on_air(void) {
-    if (on_air == 0) {
-        rgb_matrix_set_color(4, RGB_RED);
-        on_air = 1;
-    }
-    if (on_air == 1) {
-        rgb_matrix_set_color(4, 0, 0, 0);
-        on_air = 0;
-    }
+    on_air = !on_air;
 }
 
 #ifdef COMBO_ENABLE
@@ -78,7 +71,7 @@ led_config_t g_led_config = { {
 // rotation of the wheel in the different layers
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [1] = { ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP) }
+    [1] = { ENCODER_CCW_CW(MS_WHLD, MS_WHLU) }
 };
 
 #endif
@@ -107,6 +100,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             break;
         default:
             break;
+    }
+    if (on_air) {
+        rgb_matrix_set_color(4, RGB_RED);
     }
     return false;
 }
